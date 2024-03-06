@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  hope_ui:
+    build:
+      context: ${UI_FOLDER}
+      dockerfile: ${API_FOLDER}/Infra/Dockerfile.ui
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ${UI_FOLDER}:/app
+      - node_modules:/app/node_modules
+    restart: always
+
+  hope_backend:
+    build:
+      context: ${API_FOLDER}
+      dockerfile: ${API_FOLDER}/Infra/Dockerfile.api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ${API_FOLDER}:/app
+    environment:
+      - DATABASE_URL=postgresql://postgres:mysecretpassword@postgres:5432/hope_postgres
+    depends_on:
+      - postgres
+    restart: always
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: hope_postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - "5432:5432"
+    restart: always
+volumes:
+  node_modules:

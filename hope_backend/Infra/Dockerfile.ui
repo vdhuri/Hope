@@ -1,0 +1,7 @@
+from node:18
+workdir /app
+copy  ./package.json .
+copy ./package-lock.json .
+run npm install 
+expose 3000
+ENTRYPOINT ["npm","run","dev"]
