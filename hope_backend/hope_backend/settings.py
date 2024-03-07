@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'hope_backend',
+    'user'
 ]
 
 MIDDLEWARE = [
@@ -75,10 +77,15 @@ WSGI_APPLICATION = 'hope_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  # Use the PostgreSQL backend
+        'NAME': 'hope_postgres',              # Name of your PostgreSQL database
+        'USER': 'postgres',              # Username to connect to the database
+        'PASSWORD': 'mysecretpassword',      # Password to connect to the database
+        'HOST': 'postgres',                       # Host where the PostgreSQL server is running
+        'PORT': '5432',                             # Port on which the PostgreSQL server is listening
     }
 }
+
 
 
 # Password validation

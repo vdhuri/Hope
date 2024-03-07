@@ -1,4 +1,6 @@
-from python:3.8-slim-buster
+from python:3.8
+RUN apt-get update && apt-get install -y \
+    libpq-dev
 workdir /app
 copy requirements.txt requirements.txt
 Run pip3 install -r requirements.txt

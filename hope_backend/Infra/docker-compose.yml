@@ -13,6 +13,9 @@ services:
       - ${UI_FOLDER}:/app
       - node_modules:/app/node_modules
     restart: always
+    networks:
+      - hope
+    container_name: hope_ui
 
   hope_backend:
     build:
@@ -22,20 +25,32 @@ services:
       - "8000:8000"
     volumes:
       - ${API_FOLDER}:/app
-    environment:
-      - DATABASE_URL=postgresql://postgres:mysecretpassword@postgres:5432/hope_postgres
     depends_on:
       - postgres
     restart: always
+    networks:
+      - hope
+    container_name: hope_backend
 
   postgres:
     image: postgres
     environment:
-      POSTGRES_DB: hope_postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     restart: always
+    volumes:
+      - ${DB_FOLDER}:/var/lib/postgresql/data/
+    networks:
+      - hope
+    container_name: postgres
+    
 volumes:
   node_modules:
+networks:
+  hope:
+    name: hope
+    driver: bridge
+
