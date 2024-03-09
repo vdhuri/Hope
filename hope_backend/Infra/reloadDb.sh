@@ -7,10 +7,10 @@ drop_command="psql postgresql://"$POSTGRES_USER":"$POSTGRES_PASSWORD"@localhost:
 create_command="psql postgresql://"$POSTGRES_USER":"$POSTGRES_PASSWORD"@localhost:5432/postgres -c 'CREATE DATABASE "$POSTGRES_DB";'"
 # seed_command="psql postgresql://"$POSTGRES_USER":"$POSTGRES_PASSWORD"@localhost:5432/"$POSTGRES_DB" -b -q -f /tmp/seed.sql"
 
-remove_migrations="cd /app/ && rm -rf ./user/migrations ./hope_backend/migrations "
-create_migrations="cd /app/ && python manage.py makemigrations admin auth contenttypes sessions hope_backend user"
+remove_migrations="cd /app/ && rm -rf ./user/migrations ./product_details/migrations ./hope_backend/migrations "
+create_migrations="cd /app/ && python manage.py makemigrations admin auth contenttypes sessions hope_backend user product_details"
 apply_migrations="cd /app/ && python manage.py migrate"
-seed_command="cd /app/ && python manage.py initial_data_dump"
+seed_command="cd /app/ && python manage.py initial_data_dump" # This is used to add minimum data necessary to function when you hand the software, nothing on Prod
 
 
 echo "DROPPING DATABASE"
@@ -20,7 +20,7 @@ echo "CREATING DATABASE"
 docker exec postgres bash -c "$create_command"
 
 echo "REMOVING MIGRATIONS"
-# docker exec hope_backend bash -c "$remove_migrations"
+docker exec hope_backend bash -c "$remove_migrations"
 
 echo "CREATING MIGRATIONS"
 docker exec hope_backend bash -c "$create_migrations"
@@ -29,4 +29,4 @@ echo "APPLYING MIGRATIONS"
 docker exec hope_backend bash -c "$apply_migrations"
 
 echo "SEEDING DATABASE"
-# docker exec hope_backend bash -c "$seed_command"
+docker exec hope_backend bash -c "$seed_command"

@@ -1,1 +1,1 @@
-from .otp_admin import OtpAdmin
+from .admin_user_details import UserDetailsAdmin

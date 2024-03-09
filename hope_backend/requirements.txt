@@ -1,6 +1,8 @@
 asgiref==3.7.2
 debugpy==1.8.1
 Django==3.2.4
+django-dynamic-raw-id==3.0
+djangorestframework==3.14.0
 psycopg2==2.9.9
 pytz==2024.1
 sqlparse==0.4.4

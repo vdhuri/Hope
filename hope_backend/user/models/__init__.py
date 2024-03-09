@@ -1,1 +1,1 @@
-from .otp import Otp
+from .user_details import UserDetails

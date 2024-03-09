@@ -15,11 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from. import views
 
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/dynamic_raw_id/", include("dynamic_raw_id.urls")),
+    path('admin/', admin.site.urls), #the forward url here was avoiding the above to load 
     path('',views.home,name="home"),
+    path('login/',views.login, name="login")
+    
     
 ]

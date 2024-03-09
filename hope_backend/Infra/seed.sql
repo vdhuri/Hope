@@ -1,0 +1,3 @@
+-- creating superuser 
+INSERT INTO public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) VALUES (1, 'pbkdf2_sha256$320000$y4UI85NoYfVwvWaN3PoYI9$rIYskkqjCnCOZtVp20lHPXKz8QLdVMj/jEGTgmICgRc=', '2023-09-13 16:22:17.701893+00', true, 'root', 'Root', 'Root', 'superuser@django.com', true, true, '2023-09-09 09:30:46.441572+00');
+SELECT pg_catalog.setval('public.auth_group_id_seq', COALESCE((SELECT MAX(id) + 1 FROM public.auth_group), 1), false);

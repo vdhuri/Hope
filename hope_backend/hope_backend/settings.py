@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'hope_backend',
-    'user'
+    'user',
+    'product_details',
+    'dynamic_raw_id',
 ]
 
 MIDDLEWARE = [

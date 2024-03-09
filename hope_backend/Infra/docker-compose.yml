@@ -42,10 +42,12 @@ services:
       - "5432:5432"
     restart: always
     volumes:
-      - ${DB_FOLDER}:/var/lib/postgresql/data/
+      - ${DB_FOLDER}:/var/lib/postgresql/data/ #this is to save your data when you close your containers
+      - ${API_FOLDER}/Infra/seed.sql:/tmp/seed.sql
     networks:
       - hope
     container_name: postgres
+    
     
 volumes:
   node_modules:
