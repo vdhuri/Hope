@@ -16,14 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from. import views
+
 
 
 urlpatterns = [
     path("admin/dynamic_raw_id/", include("dynamic_raw_id.urls")),
     path('admin/', admin.site.urls), #the forward url here was avoiding the above to load 
-    path('',views.home,name="home"),
-    path('login/',views.login, name="login")
-    
-    
+    path('user/',include("user.urls.main"))
 ]
