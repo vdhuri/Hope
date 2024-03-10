@@ -1,0 +1,58 @@
+#!/bin/sh
+
+files=`git diff --name-only --cached --diff-filter=ACMRT | grep -E '.js$|.scss$|.html|.jsx$'` 
+files_str=""
+
+for file in $files; do
+    files_str=$files_str" "$file
+done
+
+replace="hope_ui"
+files_str=${files_str//$replace/"."}
+if [$files_str -eq ""]; then
+exit 0
+fi
+prettier_check_command=npx" "prettier" "--check$files_str 
+prettier_format_command=npx" "prettier" "--write$files_str
+echo $prettier_check_command
+echo $prettier_format_command
+docker exec hope_ui bash -c "cd /app; $prettier_check_command"
+prettier_check_format_output=$?
+
+docker exec hope_ui bash -c "cd /app; $prettier_format_command"
+
+if [ $prettier_check_format_output -eq 0 ]; then
+exit 0
+else
+git add$files_str
+exit 1
+fi
+
+
+files=`git diff --name-only --cached --diff-filter=ACMRT | grep -E '.py$'`
+files_str=""
+
+for file in $files; do
+    files_str=$files_str" "$file
+done
+replace="hope_backend"
+files_str=${files_str//$replace/"."}
+
+if [$files_str -eq ""]; then
+exit 0
+fi
+
+black_check_command=black" -l 120 -q --check"$files_str
+black_format_command=black" -l 120 -q"$files_str
+
+docker exec hope_backend bash -c "cd /app; $black_check_command"
+black_check_format_output=$?
+
+docker exec hope_backend bash -c "cd /app; $black_format_command"
+
+if [ $black_check_format_output -eq 0 ]; then
+exit 0
+else
+git add$files_str
+exit 1
+fi
